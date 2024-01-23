@@ -10,18 +10,21 @@ package com.mycompany.culminatingproject2024;
  */
 import java.util.ArrayList;
 import java.util.Scanner;
+import java.util.List; 
 
 public class MainClass {
 
-    public static class Question {
+    static class Question {
         private String question;
         private String answer;
         private int points;
+        private String difficulty;
 
-        public Question(String question, String answer, int points) {
+        public Question(String question, String answer, int points, String difficulty) {
             this.question = question;
             this.answer = answer;
             this.points = points;
+            this.difficulty = difficulty;
         }
 
         public String getQuestion() {
@@ -35,9 +38,13 @@ public class MainClass {
         public int getPoints() {
             return points;
         }
+
+        public String getDifficulty() {
+            return difficulty;
+        }
     }
 
-    public static class Lifeline {
+    static class Lifeline {
         public static String jumpTheQuestion() {
             return "You have chosen to jump the question.";
         }
@@ -47,39 +54,20 @@ public class MainClass {
         }
     }
 
-    public static class Game {
+    static class Game {
         private int score;
-        private int lifelinesRemaining;
+        private boolean mediumUnlocked;
+        private boolean hardUnlocked;
         private ArrayList<Question> questions;
         private Scanner scanner;
 
         public Game(Scanner scanner) {
             this.score = 0;
-            this.lifelinesRemaining = 3;
+            this.mediumUnlocked = false;
+            this.hardUnlocked = false;
             this.scanner = scanner;
             this.questions = new ArrayList<>();
-
-            questions.add(new Question("What is the capital of Japan?", "Tokyo", 3));
-            questions.add(new Question("Which planet is known as the Red Planet?", "Mars", 3));
-            questions.add(new Question("Who wrote 'Romeo and Juliet'?", "William Shakespeare", 3));
-            questions.add(new Question("In what year did World War II end?", "1945", 3));
-            questions.add(new Question("What is the largest mammal in the world?", "Blue Whale", 3));
-            questions.add(new Question("What is the square root of 144?", "12", 3));
-            questions.add(new Question("What is the capital of Australia?", "Canberra", 3));
-            questions.add(new Question("Which element has the chemical symbol 'O'?", "Oxygen", 3));
-            questions.add(new Question("What is the biggest State in the United States?", "Alaska", 10)); 
-            questions.add(new Question("Which river is the longest in the world?", "Nile", 3));
-            
-            questions.add(new Question("Who painted the 'Mona Lisa'?", "Leonardo da Vinci", 10));
-            questions.add(new Question("What is the most commonly played instrument?", "Piano",10)); 
-            questions.add(new Question("Who composed 'Ode to Joy'", "Beethoven", 10)); 
-            questions.add(new Question("What is the currency of Brazil?", "Brazilian Real", 10));
-            questions.add(new Question("What is the longest side of the right-angle triangle called?", "Hypotenuse", 10));
-            questions.add(new Question("Who has scored the most goals in Football/Soccer?", "Ronaldo", 10));
-            questions.add(new Question("Who is Simba's uncle?", "Scar", 10));
-            questions.add(new Question("When was the first star wars movie released? 1970 or 1977?", "1970", 10));
-            questions.add(new Question("What is the most populous country in the world(2024)", "India", 10)); 
-            questions.add(new Question("Who is the richest man on Earth(2024)", "Elon Musk", 10));
+            questions.add(new Question("What is the capital of Japan?", "Tokyo", 3, "Easy"));
             java.util.Collections.shuffle(questions);
         }
 
@@ -88,7 +76,7 @@ public class MainClass {
 
             for (Question question : questions) {
                 System.out.println("\nQuestion: " + question.getQuestion());
-                System.out.println("This Question is worth Points: " + question.getPoints());
+                System.out.println("Points: " + question.getPoints());
 
                 System.out.print("Your answer: ");
                 String userAnswer = scanner.nextLine();
@@ -101,7 +89,15 @@ public class MainClass {
                     handleWrongAnswer(question);
                 }
 
-                if (score >= 30) {
+                if (score >= 30 && score < 50 && !mediumUnlocked) {
+                    System.out.println("Congratulations! You've reached the Medium level!");
+                    questions.addAll(getMediumQuestions());
+                    mediumUnlocked = true;
+                } else if (score >= 50 && score < 80 && !hardUnlocked) {
+                    System.out.println("Congratulations! You've reached the Hard level!");
+                    questions.addAll(getHardQuestions());
+                    hardUnlocked = true;
+                } else if (score >= 80) {
                     System.out.println("Congratulations! You've won the game!");
                     break;
                 }
@@ -113,8 +109,8 @@ public class MainClass {
         private void handleWrongAnswer(Question question) {
             System.out.println("Incorrect answer!");
 
-            if (lifelinesRemaining > 0) {
-                System.out.println("You have " + lifelinesRemaining + " lifelines remaining.");
+            if (mediumUnlocked) {
+                System.out.println("You have 2 lifelines remaining.");
                 System.out.println("1. Jump the Question");
                 System.out.println("2. Get the Answer");
 
@@ -132,8 +128,6 @@ public class MainClass {
                     default:
                         System.out.println("Invalid choice. No lifeline used.");
                 }
-
-                lifelinesRemaining--;
             } else {
                 System.out.println("You have run out of lifelines.");
                 System.out.println("Game over. Your final score is: " + score);
@@ -146,5 +140,17 @@ public class MainClass {
         Scanner scanner = new Scanner(System.in);
         Game game = new Game(scanner);
         game.startGame();
+    }
+
+    private static List<Question> getMediumQuestions() {
+        List<Question> mediumQuestions = new ArrayList<>();
+        // Add medium level questions here
+        return mediumQuestions;
+    }
+
+    private static List<Question> getHardQuestions() {
+        List<Question> hardQuestions = new ArrayList<>();
+        // Add hard level questions here
+        return hardQuestions;
     }
 }
