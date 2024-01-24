@@ -144,13 +144,15 @@ public class MainClass {
 
     private static List<Question> getMediumQuestions() {
         List<Question> mediumQuestions = new ArrayList<>();
-        // Add medium level questions here
+         mediumQuestions.add(new Question("Who wrote 'Romeo and Juliet'?", "William Shakespeare", 3, "Medium"));
+         
         return mediumQuestions;
     }
 
     private static List<Question> getHardQuestions() {
         List<Question> hardQuestions = new ArrayList<>();
-        // Add hard level questions here
+         hardQuestions.add(new Question("Which river is often considered the cradle of civilization in ancient Mesopotamia?", "Tigris River", 7, "Hard"));
+
         return hardQuestions;
     }
 }
