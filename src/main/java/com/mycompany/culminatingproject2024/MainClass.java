@@ -145,13 +145,25 @@ public class MainClass {
     private static List<Question> getMediumQuestions() {
         List<Question> mediumQuestions = new ArrayList<>();
          mediumQuestions.add(new Question("Who wrote 'Romeo and Juliet'?", "William Shakespeare", 3, "Medium"));
+         mediumQuestions.add(new Question("What is the most commonly played instrument?", "Piano",3, "Medium")); 
          
+
         return mediumQuestions;
     }
 
     private static List<Question> getHardQuestions() {
         List<Question> hardQuestions = new ArrayList<>();
          hardQuestions.add(new Question("Which river is often considered the cradle of civilization in ancient Mesopotamia?", "Tigris River", 7, "Hard"));
+         hardQuestions.add(new Question("What is the currency of Switzerland?", "Swiss Franc", 7, "Hard"));
+         hardQuestions.add(new Question("In physics, what is the Heisenberg Uncertainty Principle related to?", "Quantum mechanics", 7, "Hard"));
+         hardQuestions.add(new Question("Which mountain is the highest in North America?", "Denali (formerly known as Mount McKinley)", 7, "Hard"));
+         hardQuestions.add(new Question("Who is the author of the philosophical work 'Meditations'?", "Marcus Aurelius", 7, "Hard"));
+         hardQuestions.add(new Question("Which Russian czar is known as the 'Father of the Fatherland'?", "Ivan the Terrible", 7, "Hard"));
+         hardQuestions.add(new Question("In which year did the Chernobyl nuclear disaster occur?", "1986", 7, "Hard"));
+         hardQuestions.add(new Question("What is the only planet in our solar system that rotates clockwise?", "Venus", 7, "Hard"));
+         hardQuestions.add(new Question("Which ancient wonder of the world was located in the city of Babylon?", "Hanging Gardens of Babylon", 7, "Hard"));
+         hardQuestions.add(new Question("Who painted the 'Mona Lisa'?", "Leonardo da Vinci", 7, "Hard"));
+
 
         return hardQuestions;
     }
