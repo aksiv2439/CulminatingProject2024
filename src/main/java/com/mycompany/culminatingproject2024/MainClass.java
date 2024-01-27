@@ -5,7 +5,7 @@
 package com.mycompany.culminatingproject2024;
 
 /**
- *
+ * Game Project 
  * @author AkSiv2439
  */
 import java.util.ArrayList;
@@ -14,45 +14,66 @@ import java.util.List;
 
 public class MainClass {
 
+    /**
+     * 
+     */
     static class Question {
         private String question;
         private String answer;
         private int points;
         private String difficulty;
 
+        /**
+         * Constructor to create a question object based on the parameters 
+         * @param question
+         * @param answer
+         * @param points
+         * @param difficulty 
+         */
         public Question(String question, String answer, int points, String difficulty) {
             this.question = question;
             this.answer = answer;
             this.points = points;
             this.difficulty = difficulty;
         }
-
+        /**
+         * Returns a Question 
+         * @return String
+         */
         public String getQuestion() {
             return question;
         }
 
+        /**
+         * Returns the answer to the question  
+         * @return String
+         */
         public String getAnswer() {
             return answer;
         }
-
+        /**
+         * Returns points for the question 
+         * @return int
+         */
         public int getPoints() {
             return points;
         }
 
+        /**
+         * Returns a difficulty level of the question 
+         * Easy, Medium, Hard
+         * @return String
+         */
         public String getDifficulty() {
             return difficulty;
         }
     }
 
-    static class Lifeline {
-        public static String jumpTheQuestion() {
-            return "You have chosen to jump the question.";
-        }
-
-        public static String getTheAnswer(String answer) {
-            return "The correct answer is: " + answer;
-        }
-    }
+    
+    /**
+     * Game Class 
+     * 
+     */
 
     static class Game {
         private int score;
@@ -64,12 +85,16 @@ public class MainClass {
         //private int lifeLinesRemaining=2;
         
        
-
+        /**
+         * Constructor for the Game class sets the easy questions to the array list 
+         * sets default strikes and higher levels boolean value to false 
+         * @param scanner 
+         */
         public Game(Scanner scanner) {
             this.score = 0;
             this.mediumUnlocked = false;
             this.hardUnlocked = false;
-            this.strikes = 0;
+            this.strikes = 3;
             this.scanner = scanner;
             this.questions = new ArrayList<>();
             questions.add(new Question("What is the capital of Japan? a) Osaka b) Tokyo", "b", 5, "Easy"));
@@ -93,6 +118,11 @@ public class MainClass {
             java.util.Collections.shuffle(questions);
         }
 
+        /**
+         * driver method to start the game 
+         * loads the questions for the game for each of the three levels
+         * easy, medium and hard 
+         */
         public void startGame() {
             System.out.println("Welcome to the Game Show!");
             
@@ -135,18 +165,20 @@ public class MainClass {
                     }
                     
                 } else {
-                    //System.out.println("Oops. Incorrect answer!");
-                      if (strikes >0) {
+                   //System.out.println("Oops. Incorrect answer!");
+                      if (strikes >=1 ) {
                         
                         boolean continuetheGame =handleWrongAnswer(question);
                         if (continuetheGame == false){
                             System.out.println("Game over. Your final score is: " + score);
+                            break;
                         }
                         else {
                            continue; 
                         }
                       } else {
                            System.out.println("Game over. Your final score is: " + score);
+                           break;
                       }
                       //
                 }
@@ -157,50 +189,51 @@ public class MainClass {
 
             //
         }
-
+        /**
+         * Handle Wrong Answer - checks the strikes available
+         * prompts the user to input whether to continue or exit the game 
+         * @param question
+         * @return boolean 
+         */
         private boolean handleWrongAnswer(Question question) {
-            boolean continueGame =true;
+            boolean continueGame =false;
 
             if (strikes > 0 ) {
-                System.out.println("Oops, Incorrect Answer!");
-                strikes--;
-                System.out.println("You have +  + strikes remaining.");
+                System.out.print("Oops, Incorrect Answer! \t");
+                System.out.print("You have  "+  strikes + " strikes remaining.\n ");
               
 
                 System.out.print("Do you want to continue? (yes/no): ");
                 String choice = scanner.nextLine();
 
                 if (choice.equalsIgnoreCase("no")) {
-                    continueGame = false; 
+                    //continueGame = false; 
+                    strikes=0;
+                
                 }
-                if (choice.equalsIgnoreCase("yes")) { 
+                else if (choice.equalsIgnoreCase("yes")) { 
                     continueGame = true; 
-                }
+                    strikes--;
                 
-                } else {
+                }          
+                 else {
                 System.out.println("You have run out of strikes.");
-                continueGame = false;
-            }
-                
+                  //continueGame = false;
+                }
+            }   
                 return continueGame;
             
                 //System.out.println("You have run out of lifelines.");
                 //System.exit(0);
-            }
+            
         }
-    
-    
-
-    public static void main(String[] args) {
-        Scanner scanner = new Scanner(System.in);
-        Game game = new Game(scanner);
-        game.startGame();
+        
     }
-
+    
     /**
      * 
-     * 
-     * @return 
+     * Returns a list of medium questions and shuffles the list 
+     * @return List of Questions
      */
     private static List<Question> getMediumQuestions() {
         
@@ -217,7 +250,11 @@ public class MainClass {
 
         return mediumQuestions;
     }
-
+     /**
+     * 
+     * Returns a list of Hard questions and shuffles the list 
+     * @return List of Questions
+     */
     private static List<Question> getHardQuestions() {
         List<Question> hardQuestions = new ArrayList<>();
          hardQuestions.add(new Question("Which river is often considered the cradle of civilization in ancient Mesopotamia a)Black Sea, b)Tigris ,c) Niles ?", "b", 15, "Hard"));
@@ -234,4 +271,18 @@ public class MainClass {
 
         return hardQuestions;
     }
-}
+    
+    /**
+     * main method 
+     * @param args 
+     */
+
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        Game game = new Game(scanner);
+        game.startGame();
+    }
+
+    
+ 
+}//mainclass
